@@ -1,0 +1,17 @@
+.App {
+  font-family: "Fira Sans", sans-serif;
+  text-align: center;
+  
+}
+
+body {
+  background-image: image-set(
+      url('https://previews.dropbox.com/p/thumb/ACFem_pZaw8FX84wUKQGo11FrUSDEuoMtc1_ijfBp8JTu8llivdd3xFK02iS8lrux1EAAxPJ_oZouXN2oZ1mGoWWaA-gFzTYe1VsW6Gul0mNKdNAqRO5c5sK1ukP0GGLy9SYsi3gxAtavFxoQ2FefpWxDBy7jbcsWc4OirisuQTibyYzPZJGuW67oRgwPNoLovpyLd26INVN2-2x80CiQ0Hp8XdbLThhb3lxLLz-b6xbMGhkR3xmK-gvyc7_6zBHmtX6OkJr-ijyBKry1wknA3ReayJpzuGSYYzra5iAMNgvhzY7PO99hNgdpVQF31-DuCNcgWmqEZnpKcRX1JndcWJu/p.jpeg') 1x,
+      url('https://previews.dropbox.com/p/thumb/ACFdzVmOXnEpB3bA85lyE0eTi6CmtvIwyoaBqdFJCgVL_ICnOWdEQRUoRHCbFz-Tx6wzv-JntKqJC861NiHybhn00dtkgE1xoWWtxguRfKFUKRvpbJTh9e_K_bpbXY7l_s_c7t3ZFooEhHXjbReEJt4NWImLMABlFEyeoK25b4iSqAgZ1jzgmbodsi6OiGrL6J3hffboVA9dAP89KWd7fucmZLYh6S7MJy4kCxULngwDamPemi002KchuPwg8YNeoWi9EUNzyrsE5fqr7beqv5cdXAGVMiNK3S_V9yXSCdcTQDVX9UclEuev9CpXtbqpAWGIEdcm4Wo-j583rx8RtMP4/p.jpeg') 2x
+   );
+}
+
+.button {
+  font-size: 5vh;
+  cursor: pointer;
+}

@@ -1,0 +1,12 @@
+.display {
+    height: 13.2vh;
+    width: 48vh;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+    padding: 1vh;
+    font-size: 10vh;
+    text-align: right;
+    align-items: end;
+    justify-items: end;
+}
