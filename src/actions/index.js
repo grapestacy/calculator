@@ -50,9 +50,8 @@ export const decimalInput = ( value, displayValue, waitingForNumber ) => {
   if (value !== parseFloat(data.displayValue)  && data.displayValue.indexOf('.') === -1) {
       data.displayValue = data.displayValue + '.';
       data.waitingForNumber = false;
-      //if value is equal to the display value and we are waiting for the second number to be entered, we need to start it off with
-      //a "0." because the decimal was clicked before a number.
-  } else if ((value === parseFloat(data.displayValue) && data.waitingForNumber)) {
+      
+    } else if ((value === parseFloat(data.displayValue) && data.waitingForNumber)) {
       data.displayValue = '0.';
       data.waitingForNumber = false;
   }
