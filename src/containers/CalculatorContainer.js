@@ -1,5 +1,5 @@
 import React from "react";
-import Display from "../components/Display";
+import Display from "../UI/display/Display";
 import InputContainer from "./InputContainer";
 
 const CalculatorContainer = () => {
@@ -7,12 +7,11 @@ const CalculatorContainer = () => {
     <div
       style={{
         width: "50vh",
-        height: "70vh",
+        height: "66vh",
         border: "0.25vh",
         borderBlockColor: "#000",
         borderRadius: "3vh",
         margin: "8vh auto",
-        marginTop: "8vh",
         background: "rgba(0, 0, 0, 0.67)",
         boxShadow: "1.5vh 3vh 3vh rgba(0, 0, 0, 0.47)"
       }}
