@@ -13,23 +13,10 @@ import * as Operations from "../constants/operations";
 const InputContainer = () => {
   const inputs = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."];
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "3fr 1fr",
-        gridGap: "0.2vh"
-      }}
-    >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          justifyItems: "center",
-          alignItems: "center",
-          gridGap: "0.2vh"
-        }}
-      >
-        <Action action={CLEAR_ALL} label="AC" />
+
+    <div> 
+      <div>
+      <Action action={CLEAR_ALL} label="AC" />
         <Action action={SET_DISPLAY} label="+/-" />
         <Action action={SET_DISPLAY} label="%" />
         
@@ -38,21 +25,24 @@ const InputContainer = () => {
         ))}
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          justifyItems: "center",
-          alignItems: "center",
-          gridGap: "0.2vh"
-        }}
-      >
+      <div>
+      
         <Operator operation={Operations.MULTIPLY} label="x" />
         <Operator operation={Operations.MINUS} label="-" />
         <Operator operation={Operations.DIVIDE} label="÷" />
         <Operator operation={Operations.PLUS} label="+" />
         <Operator operation={Operations.SOLVE} label="=" />
       </div>
+
     </div>
+/*<div
+      style={{
+        display: "grid",
+        justifyItems: "center",
+        alignItems: "center",
+        gridGap: "0.2vh"
+      }}*/
+    
   );
 };
 
