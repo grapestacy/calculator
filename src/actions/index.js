@@ -1,114 +1,122 @@
 import {
-  CLEAR,
-  CLEAR_ALL,
-  DECIMAL,
-  DO_MATH,
-  SWAP_SIGN,
-  DIGIT,
-  PERCENT
-} from "./types";
-
-const CalcOperations = {
-  'PLUS' : (prevValue, nextValue) => prevValue + nextValue,
-  'MINUS' : (prevValue, nextValue) => prevValue - nextValue,
-  'MULTIPLY' : (prevValue, nextValue) => prevValue * nextValue,
-  'DIVIDE' : (prevValue, nextValue) => prevValue / nextValue,
-  'SOLVE' : (prevValue, nextValue) => nextValue
-};
-
-const percentageToDecimal = n => n / 100;
-
-
-export const clearAll = () => ({ type: CLEAR_ALL});
-export const clear = () => ({ type: CLEAR});
-export const swapSign = displayValue => {
-  let oppositeValue = parseFloat(displayValue) * -1;
-
-  return {
-    type: SWAP_SIGN,
-    payload: parseFloat(oppositeValue)
-  }
-};
-
-export const percentInput = (value, displayValue, operator ) => {
+    CLEAR_DISPLAY,
+    CLEAR_ALL,
+    SET_NUMBER,
+    DO_MATH,
+    SET_DISPLAY
+  } from "./types";
+    
   
-  let updatedValue = (operator !== 'PLUS' || operator !=='MINUS') ? String(percentageToDecimal(parseFloat(displayValue))) :  String((displayValue / 100) * value);
+  export const clearAll = () => ({ type: CLEAR_ALL});
   
-  return {
-      type: PERCENT,
-      payload : updatedValue
+  export const clearDisplay = () => ({ type: CLEAR_DISPLAY});
+  
+  export const setDisplay = displayValue => {
+    return {
+      type: SET_DISPLAY,
+      payload: displayValue
+    }
   };
-};
-
-export const decimalInput = ( value, displayValue, waitingForNumber ) => {
-
-  const data = {
-      displayValue : displayValue,
-      waitingForNumber: waitingForNumber
+    
+  export const setNumber = (value, calculator) => {
+    return {
+        type: SET_NUMBER,
+        payload: calculator
+    }
+  };
+  
+  export const doMath = (calculator) => {
+    return {
+        type: DO_MATH,
+        payload:calculator
+    }
   };
 
-  if (value !== parseFloat(data.displayValue)  && data.displayValue.indexOf('.') === -1) {
-      data.displayValue = data.displayValue + '.';
-      data.waitingForNumber = false;
+   //thunk action creator
+
+  const percentInput = n => n/100;
+  const swapSignInput = n => n*-1;
+  
+  export const setDisplayValue = (displayValue, operation) => {
+    return (dispatch) => {
+      let updatedValue = displayValue;
+      switch(operation) {
+        case '%':
+          percentInput(updatedValue);
+          break;
+        case '+/-':
+          swapSignInput(updatedValue);
+          break;
+        default:
+          break;
+      }
+      dispatch(setDisplay(updatedValue));
+    };
+  };
+
+  export const setNumberValue = (value, displayValue, waitingForNumber) => {
+    return (dispatch) => {
+
+      const calculator = {
+        displayValue : displayValue,
+        waitingForNumber: waitingForNumber
+    };
       
-    } else if ((value === parseFloat(data.displayValue) && data.waitingForNumber)) {
-      data.displayValue = '0.';
-      data.waitingForNumber = false;
-  }
+    if ((value) !== '.') {
+      if(waitingForNumber) {
+        calculator.displayValue = value;
+        calculator.waitingForNumber = false;
+      } else {
+        calculator.displayValue = displayValue === '0' ? value : displayValue + value;
+      }
+    }
+    else {
+      if (value !== parseFloat(calculator.displayValue)  && calculator.displayValue.indexOf('.') === -1) {
+        calculator.displayValue = calculator.displayValue + '.';
+        calculator.waitingForNumber = false;
+          
+        } else if ((value === parseFloat(calculator.displayValue) && calculator.waitingForNumber)) {
+          calculator.displayValue = '0.';
+          calculator.waitingForNumber = false;
+        }
+    }
 
-  //console.log(data)
-  return {
-      type: DECIMAL,
-      payload: data
-  }
-};
-
-export const digitInput = (number, displayValue, waitingForNumber) => {
- 
-  let data = {
-      displayValue: displayValue,
-      waitingForNumber: waitingForNumber
+    dispatch(setNumber(value, calculator))
+    };
   };
 
-  if(waitingForNumber) {
-      data.displayValue = number;
-      data.waitingForNumber = false;
-  } else {
-      data.displayValue = displayValue === '0' ? number : displayValue + number;
-  }
-  return {
-      type: DIGIT,
-      payload: data
-  }
-};
-
-export const doMath = (nextOperator, value, displayValue, operator, waitingForNumber) => {
-
-  let data = {
-      value: value,
-      displayValue: displayValue,
-      operator: operator,
-      waitingForNumber: waitingForNumber
+  const CalcOperations = {
+    'PLUS' : (prevValue, nextValue) => prevValue + nextValue,
+    'MINUS' : (prevValue, nextValue) => prevValue - nextValue,
+    'MULTIPLY' : (prevValue, nextValue) => prevValue * nextValue,
+    'DIVIDE' : (prevValue, nextValue) => prevValue / nextValue,
+    'SOLVE' : (prevValue, nextValue) => nextValue
   };
 
-  const inputValue = parseFloat(displayValue);
-  if (value === null) {
-      data.value = inputValue
-  } else if (operator && !waitingForNumber) {
-    const currentValue = value || 0;
-    const newValue = CalcOperations[operator](currentValue, inputValue);
-    data.value = newValue;
-    data.displayValue = String(newValue);
-  }
-  data.waitingForNumber = true;
-  data.operator = nextOperator;
+  export const countMath = (nextOperator, value, displayValue, operator, waitingForNumber) => {
 
-  //console.log(data);
+    return (dispatch) => {let calculator = {
+        value: value,
+        displayValue: displayValue,
+        operator: operator,
+        waitingForNumber: waitingForNumber
+    };
+  
+    const inputValue = parseFloat(displayValue);
+    if (value === null) {
+        calculator.value = inputValue
+    } else if (operator && !waitingForNumber) {
+      const currentValue = value || 0;
+      const newValue = CalcOperations[operator](currentValue, inputValue);
+      calculator.value = newValue;
+      calculator.displayValue = String(newValue);
+    }
+    calculator.waitingForNumber = true;
+    calculator.operator = nextOperator;
 
-  return {
-      type: DO_MATH,
-      payload: data
-  }
-};
+    dispatch(doMath(calculator));
+    };
+  
+  };
 
 

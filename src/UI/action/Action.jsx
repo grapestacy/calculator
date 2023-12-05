@@ -1,50 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-import MyButton from "../button/MyButton";
-import { clear, clearAll, percentInput, swapSign } from "../../actions";
-import {SWAP_SIGN, CLEAR, CLEAR_ALL, PERCENT} from "../../actions/types";
-import classes from "./Action.module.css";
-//import { toBePartiallyChecked } from "@testing-library/jest-dom/matchers";
+import { clearDisplay, clearAll, setDisplayValue} from "../../actions/index";
+import {SET_DISPLAY, CLEAR_ALL, CLEAR_DISPLAY} from "../../actions/types";
 
-const Action = (props) => {
-  const { action, value, displayValue, waitingForNumber} = props;
+const Action = ({ action, displayValue, label, clearDisplay, clearAll, setDisplayValue}) => {
 
   const checkClearMethod = displayValue === '0';
   const clearText = checkClearMethod ? 'AC' : 'C';
-  console.log(action)
+
+  //console.log(action)
   const handleActionRequest = () => {
     switch (action) {
-      case SWAP_SIGN:
-        props.swapSign(displayValue);
-        break;
-      case PERCENT:
-        props.percentInput(value, displayValue, waitingForNumber);
+      case SET_DISPLAY:
+        setDisplayValue(displayValue, label);
         break;
       default:
-        (checkClearMethod) ? props.clearAll() : props.clear();
+        (checkClearMethod) ? clearAll() : clearDisplay();
         break;
 
     }
   };
 
   return (
-    <MyButton onClick={handleActionRequest} customClass={classes.button} 
-    label={ (action === CLEAR_ALL || action === CLEAR) ? clearText : props.label}>
-    </MyButton>
+    <button onClick={handleActionRequest}>
+      {(action === CLEAR_ALL || action === CLEAR_DISPLAY) ? clearText : label}
+    </button>
   );
 };
 
 const mapStateToProps = state => {
   return {
-      value: state.data.value,
-      displayValue: state.data.displayValue,
-      waitingForNumber: state.data.waitingForNumber
+      displayValue: state.calculator.displayValue
   }
 };
 
 export default connect(mapStateToProps, { 
-  clear,
+  clearDisplay,
   clearAll,
-  swapSign,
-  percentInput }
+  setDisplayValue}
 )(Action);

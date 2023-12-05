@@ -9,7 +9,7 @@ const Display = ({ displayValue }) => {
 };
 
 const mapStateToProps = state => ({
-  displayValue: state.data.displayValue
+  displayValue: state.calculator.displayValue
 });
 
 export default connect(mapStateToProps)(Display);

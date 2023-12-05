@@ -1,7 +1,5 @@
-export const CLEAR = "CLEAR";
+export const CLEAR_DISPLAY = "CLEAR_DISPLAY";
 export const CLEAR_ALL = "CLEAR_ALL";
 export const DO_MATH = "DO_MATH";
-export const DECIMAL = "DECIMAL";
-export const SWAP_SIGN = "SWAP_SIGN";
-export const PERCENT = "PERCENT";
-export const DIGIT = "DIGIT";
+export const SET_NUMBER = "SET_NUMBER";
+export const SET_DISPLAY = "SET_DISPLAY";

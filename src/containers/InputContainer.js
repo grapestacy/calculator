@@ -4,9 +4,7 @@ import Operand from "../UI/operand/Operand";
 import Operator from "../UI/operator/Operator";
 import {
   CLEAR_ALL,
-  CLEAR,
-  PERCENT,
-  SWAP_SIGN
+  SET_DISPLAY
 
 }  from "../actions/types";
 import * as Operations from "../constants/operations";
@@ -32,8 +30,8 @@ const InputContainer = () => {
         }}
       >
         <Action action={CLEAR_ALL} label="AC" />
-        <Action action={SWAP_SIGN} label="+/-" />
-        <Action action={PERCENT} label="%" />
+        <Action action={SET_DISPLAY} label="+/-" />
+        <Action action={SET_DISPLAY} label="%" />
         
         {inputs.map(i => (
           <Operand number={i} key={i}/>
